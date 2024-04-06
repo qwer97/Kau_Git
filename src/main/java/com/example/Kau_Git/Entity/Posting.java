@@ -1,33 +1,43 @@
 package com.example.Kau_Git.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "POSTING")
 public class Posting {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POST_ID", nullable = false)
+    @Column(name = "POST_ID")
     private Long postId;
 
     @Column(name = "TYPE", length = 1)
-    private String type;
+    private char type;
 
     @Column(name = "POST_ORD")
     private Short postOrd;
 
-    @Column(name = "WRITE_DATE")
-    private Date writeDate;
+    @Column(name = "WRITE_DATE", nullable = false)
+    private LocalDateTime writeDate = LocalDateTime.now();
 
-    @Column(name = "CLASS", length = 1)
-    private String postClass;
+    @Column(name = "CLASSIFICATION", length = 1)
+    private char classification;
 
     @Column(name = "CONTENT", length = 4000)
     private String content;
 
-    @Column(name = "WRITER_ID")
-    private Long writerId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "WRITER_ID", referencedColumnName = "USERID", foreignKey = @ForeignKey(name = "FK_WRITER_ID"))
+    private User writer;
 
     @Column(name = "HASHTAG", length = 1000)
     private String hashtag;
@@ -42,6 +52,5 @@ public class Posting {
     private Integer recommentCnt;
 
     @Column(name = "IS_HIDE", nullable = false)
-    private Boolean isHide = false;
-
+    private boolean isHide = false;
 }
