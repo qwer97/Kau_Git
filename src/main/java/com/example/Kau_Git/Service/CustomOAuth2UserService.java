@@ -1,6 +1,8 @@
-package com.example.Kau_Git.Oauth;
+package com.example.Kau_Git.Service;
 
 import com.example.Kau_Git.Entity.User;
+import com.example.Kau_Git.Oauth.OAuthAttributes;
+import com.example.Kau_Git.Oauth.SessionUser;
 import com.example.Kau_Git.Repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

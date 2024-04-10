@@ -2,12 +2,16 @@ package com.example.Kau_Git.Entity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.*;
 
 @Entity
 @Table(name = "USER")
+@NoArgsConstructor
+@Getter
+@Setter
 public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +65,6 @@ public class User  {
     @Enumerated(EnumType.STRING) // Enum값을 어떤 형태로 저장할지 결정합니다. (기본적은 int)
     @Column(nullable = false)
     private MyRole role; // 사용자의 권한을 관리할 Enum 클래스
-
 
     @Builder
     public User(String name, String email, MyRole role) {

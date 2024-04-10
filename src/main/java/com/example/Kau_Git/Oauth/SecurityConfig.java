@@ -1,6 +1,6 @@
 package com.example.Kau_Git.Oauth;
 
-import com.example.Kau_Git.Oauth.CustomOAuth2UserService;
+import com.example.Kau_Git.Service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
