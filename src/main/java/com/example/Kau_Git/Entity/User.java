@@ -1,9 +1,7 @@
 package com.example.Kau_Git.Entity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.web.bind.annotation.BindParam;
 
 import java.util.*;
 
@@ -18,7 +16,9 @@ public class User  {
     @Column(name = "USERID", nullable = false)
     @Getter
     @Setter
-    private Long userId;
+    private long userId;
+
+    private String id;
 
     @Getter
     @Setter
@@ -37,6 +37,9 @@ public class User  {
 
     @Column(name = "BIRTH_DATE")
     private Date birthDate;
+
+    @Column(length = 100)
+    private String password;
 
     @Column(name = "GENDER")
     private Integer gender;
@@ -67,15 +70,15 @@ public class User  {
     private MyRole role; // 사용자의 권한을 관리할 Enum 클래스
 
     @Builder
-    public User(String name, String email, MyRole role) {
+    public User(String id,String name, String email, MyRole role) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
     }
 
-    public User update(String name, String picture) {
+    public User update(String name) {
         this.name = name;
-
         return this;
     }
 

@@ -6,10 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.*;
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig { // 시큐리티 환경 설정 클래스
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -32,5 +33,6 @@ public class SecurityConfig {
     }
 
 }
+
 
 
