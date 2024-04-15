@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class HomeController {
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(@RequestParam("provider") String provider, Model model) {
         // provider에 따라 네이버 또는 구글 로그인 페이지로 리다이렉트
         String redirectUrl = "redirect:/";

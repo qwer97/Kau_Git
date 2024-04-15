@@ -42,7 +42,7 @@ public class User  {
     private String password;
 
     @Column(name = "GENDER")
-    private Integer gender;
+    private Integer gender; // 1이 남성 , 0이 여자
 
     @Column(name = "RELIGION", length = 100)
     private String religion;

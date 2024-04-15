@@ -20,7 +20,6 @@ public class MyPageService { // 새로 정보 등록하기, 회원 정보 가져
         //이메일 기반 으로 사용자 찾기
         Optional<User> u1 =ur.findByEmail(email); //Optional -> null값일 수 도 있기때문에 감아놓는다.
 
-
         if(u1.isPresent()){
 
             User s1 = u1.get();
