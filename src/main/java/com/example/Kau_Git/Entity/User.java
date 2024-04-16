@@ -60,7 +60,9 @@ public class User  {
     private String contactDetail;
 
     @Column(name = "USER_POINT")
-    private Integer userPoint;
+    @Getter
+    @Setter
+    private Integer userPoint=0;
 
     @Column(name = "HAS_BANNED_FLAG", nullable = false)
     private Boolean hasBannedFlag = false;
@@ -68,6 +70,8 @@ public class User  {
     @Enumerated(EnumType.STRING) // Enum값을 어떤 형태로 저장할지 결정합니다. (기본적은 int)
     @Column(nullable = false)
     private MyRole role; // 사용자의 권한을 관리할 Enum 클래스
+
+
 
     @Builder
     public User(String id,String name, String email, MyRole role) {

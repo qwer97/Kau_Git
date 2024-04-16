@@ -21,11 +21,12 @@ public class MyPageService { // 새로 정보 등록하기, 회원 정보 가져
         Optional<User> u1 =ur.findByEmail(email); //Optional -> null값일 수 도 있기때문에 감아놓는다.
 
         if(u1.isPresent()){
-
             User s1 = u1.get();
 
             String un =s1.getName();
             String ue =s1.getEmail();
+            Integer p =s1.getUserPoint();
+
             return s1;
 
         }else{

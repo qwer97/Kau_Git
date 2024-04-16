@@ -24,7 +24,7 @@ public class MyPageServiceTest {
 
         Optional<User> s1 = Optional.ofNullable(ms.GetInformation("mcrohmh@naver.com", "곽홍주"));
 
-        System.out.println(s1.get().getEmail()+" "+s1.get().getName());
+        System.out.println(s1.get().getEmail()+" "+s1.get().getName()+" "+s1.get().getUserPoint());
     }
 
     @Test

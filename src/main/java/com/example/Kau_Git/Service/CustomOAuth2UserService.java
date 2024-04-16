@@ -22,6 +22,7 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+
     //로그인 후 가져온 사용자의 정보를 기반으로 가입 및 정보 수정, 세션 저장 등의 기능을 수행
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -51,7 +52,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // 사용자 정보가 변경 될시 User 엔티티에도 반영
     private User saveOrUpdate(OAuthAttributes attributes) {
         User user = userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName()))
+                .map(entity -> {
+                    entity.update(attributes.getName());
+                    // 로그인 할 때마다 포인트를 30 증가시킴
+                    entity.setUserPoint(entity.getUserPoint() + 30);
+                    return entity;
+                })
                 .orElse(attributes.toEntity());
 
         return userRepository.save(user);
