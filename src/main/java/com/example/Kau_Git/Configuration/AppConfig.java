@@ -1,4 +1,4 @@
-package com.example.Kau_Git.Controller;
+package com.example.Kau_Git.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
