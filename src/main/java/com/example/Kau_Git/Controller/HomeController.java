@@ -3,16 +3,23 @@ package com.example.Kau_Git.Controller;
 import com.example.Kau_Git.Oauth.Login;
 import com.example.Kau_Git.Oauth.OAuthAttributes;
 import com.example.Kau_Git.Oauth.SessionUser;
+import com.example.Kau_Git.Service.GetFestivalService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+
+    private final GetFestivalService gs;
 
     @PostMapping("/login")
     public String login(@RequestParam("provider") String provider, Model model) {
@@ -31,6 +38,10 @@ public class HomeController {
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
+
+        List<JSONObject> festivals = gs.getFestival();
+        model.addAttribute("festivals",festivals);
+
         return "home";
     }
 }

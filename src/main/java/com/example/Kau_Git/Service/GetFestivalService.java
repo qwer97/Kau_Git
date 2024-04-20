@@ -1,57 +1,84 @@
 package com.example.Kau_Git.Service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GetFestivalService {
 
+    private final RestTemplate rt;
 
+    // API의 기본 URL
+    private static final String BASE_URL = "https://apis.data.go.kr/B551011/KorService1/searchFestival1";
 
     @Value("${api.key}")
     private String apiKey;
 
-    private final RestTemplate rt;
-
-    public GetFestivalService(RestTemplate rt){
-        this.rt= rt;
+    public GetFestivalService(RestTemplate rt) {
+        this.rt = rt;
     }
 
+    public List<JSONObject> getFestival() {
+        // UriComponentsBuilder를 사용하여 URL 생성
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(BASE_URL)
+                .queryParam("MobileOS", "etc")
+                .queryParam("MobileApp", "han")
+                .queryParam("eventStartDate", "20240411")
+                .queryParam("serviceKey", apiKey); // 서비스 키를 직접 제공
 
-    public String getFestival() {
-        String baseUrl ="https://apis.data.go.kr/B551011/KorService1/searchFestival1"; // API의 기본 URL
+        // URI를 문자열로 변환하고, + 문자를 %2B로 변환
+        String uriString = builder.build().encode().toUriString().replace("+", "%2B"); 
 
-        // 필수 파라미터 값 설정
-        String MobileOS = "etc"; // 예시 값
-        String MobileApp = "Hanzoom"; // 예시 값
-        String eventStartDate = "20240411"; // 예시 값 (YYYYMMDD 형식)
-        String serviceKey = apiKey; // 실제 서비스 키로 교체해야 함
+        uriString+="&_type=json";
 
-        // UriComponentsBuilder를 사용하여 요청 URL 구성
-        String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
-                .queryParam("MobileOS", MobileOS)
-                .queryParam("MobileApp", MobileApp)
-                .queryParam("eventStartDate", eventStartDate)
-                .queryParam("serviceKey", serviceKey)
-                .toUriString();
+        // 변환된 URI 문자열로 URI 객체 생성
+        URI uri = URI.create(uriString);
 
-        // API 호출 및 응답 반환 (실제 호출 코드는 여기에 추가)
-        System.out.println("API 요청 URL: " + url);
-        return rt.getForObject(url, String.class);
+
+
+
+        // API 요청 및 응답 받기
+        String response = rt.getForObject(uri, String.class);
+
+        List<JSONObject> festivalList = new ArrayList<>();
+
+        try {
+            JSONParser parser = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
+            JSONObject jsonResponse = (JSONObject) parser.parse(response);
+
+            JSONObject responseObj = (JSONObject) jsonResponse.get("response");
+            JSONObject body = (JSONObject) responseObj.get("body");
+            JSONObject items = (JSONObject) body.get("items");
+            JSONArray itemArray = (JSONArray) items.get("item");
+
+            for (Object item : itemArray) {
+                JSONObject itemObj = (JSONObject) item;
+                String addr1 = (String) itemObj.get("addr1");
+                String title = (String) itemObj.get("title");
+                String firstImage = (String) itemObj.get("firstimage");
+
+                JSONObject festivalInfo = new JSONObject();
+                festivalInfo.put("addr1", addr1);
+                festivalInfo.put("title", title);
+                festivalInfo.put("firstimage", firstImage);
+
+                festivalList.add(festivalInfo);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return festivalList;
     }
-
-
-
 }
