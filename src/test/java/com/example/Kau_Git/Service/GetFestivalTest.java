@@ -35,6 +35,7 @@ public class GetFestivalTest {
             System.out.println("제목: " + festival.get("title"));
             System.out.println("이미지 URL: " + festival.get("firstimage"));
             System.out.println("---------------------------");
+
         }
     }
 
