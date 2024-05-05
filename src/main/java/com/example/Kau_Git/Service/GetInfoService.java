@@ -26,13 +26,13 @@ public class GetInfoService {
     }
     private static final String BASE_URL = "https://apis.data.go.kr/B551011/ForFriTourService/locationBasedList";
 
-    public List<JSONObject> getInfo() {
+    public List<JSONObject> getInfo(String lat, String lng) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(BASE_URL)
                 .queryParam("serviceKey", apiKey)
                 .queryParam("MobileOS", "etc")
                 .queryParam("MobileApp", "hanzoom")
-                .queryParam("mapX", "127.0051244527")
-                .queryParam("mapY", "37.5558698527")
+                .queryParam("mapX", lng) // 경도
+                .queryParam("mapY", lat) // 위도
                 .queryParam("radius", "2000");
 
         String uriString = builder.build().encode().toUriString().replace("+", "%2B");
