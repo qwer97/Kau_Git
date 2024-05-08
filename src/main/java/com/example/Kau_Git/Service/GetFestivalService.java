@@ -20,7 +20,7 @@ public class GetFestivalService {
     private final RestTemplate rt;
 
     // API의 기본 URL
-    private static final String BASE_URL = "https://apis.data.go.kr/B551011/KorService1/searchFestival1";
+    private static final String BASE_URL = "https://apis.data.go.kr/B551011/EngService1/searchFestival1";
 
     @Value("${api.key}")
     private String apiKey;
