@@ -61,13 +61,11 @@ public class GetInfoService {
                 String addr1 = (String) itemObj.get("addr1");
                 String title = (String) itemObj.get("title");
                 String firstImage = (String) itemObj.get("firstimage");
-                String firstImage2 = (String) itemObj.get("firstimage2");
 
                 JSONObject TravelInfo= new JSONObject();
                 TravelInfo.put("addr1", addr1);
                 TravelInfo.put("title", title);
                 TravelInfo.put("firstImage", firstImage);
-                TravelInfo.put("firstImage2",firstImage2);
 
                 resultList.add(TravelInfo);
             }
