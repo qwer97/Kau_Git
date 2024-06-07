@@ -71,7 +71,8 @@ public class User  {
     @Column(nullable = false)
     private MyRole role; // 사용자의 권한을 관리할 Enum 클래스
 
-
+    private int myx;
+    private int myy;
 
     @Builder
     public User(String id,String name, String email, MyRole role) {
