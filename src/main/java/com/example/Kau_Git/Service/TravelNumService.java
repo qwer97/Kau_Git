@@ -60,11 +60,13 @@ public class TravelNumService {
             for (Object item : itemArray) {
                 JSONObject itemObj = (JSONObject) item;
                 String areaNm = (String) itemObj.get("areaNm");
+                int touDivCd = Integer.parseInt(String.valueOf(itemObj.get("touDivCd")));
                 double touNumDouble = Double.parseDouble(String.valueOf(itemObj.get("touNum")));
                 long touNum = Math.round(touNumDouble);
-
-                // 지자체별 관광객 수를 누적합니다.
-                areaVisitorMap.merge(areaNm, touNum, Long::sum);
+                
+                if (touDivCd == 3) {//3이 외국인
+                    areaVisitorMap.merge(areaNm, touNum, Long::sum);
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();

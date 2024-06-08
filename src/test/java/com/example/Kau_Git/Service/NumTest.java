@@ -23,7 +23,7 @@ public class NumTest {
         var info = ts.getInfo();
 
         for(Map.Entry<String, Long> entry : info.entrySet()){
-            System.out.println("지자체: " + entry.getKey() + ", 관광객 수: " + entry.getValue());
+            System.out.println("지자체: " + entry.getKey() + ", 관광객 수: " + entry.getValue()+"명");
         }
 
     }
