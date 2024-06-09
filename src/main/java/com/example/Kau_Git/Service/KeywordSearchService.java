@@ -34,9 +34,9 @@ public class KeywordSearchService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(BASE_URL)
                 .queryParam("MobileOS", "etc")
                 .queryParam("MobileApp", "hanzoom")
-                .queryParam("keyword", "pharmacy")// 따로 파라미터
+                .queryParam("keyword", "pharmacy")// 따로 파라미터 , hospital hotel pharmacy
                 .queryParam("serviceKey", apiKey); // 서비스 키를 직접 제공
-
+//+ 지역코드, 시군구코드
         // URI를 문자열로 변환하고, + 문자를 %2B로 변환
         String uriString = builder.build().encode().toUriString().replace("+", "%2B");
 
