@@ -1,45 +1,67 @@
 package com.example.Kau_Git.Controller;
 
-import com.example.Kau_Git.Service.GetInfoService;
+import com.example.Kau_Git.Service.*;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import java.awt.geom.Area;
+import java.security.Key;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MapController {
 
     private final GetInfoService gs;
+    private final KeywordSearchService ks;
 
     @Autowired
-    public MapController(GetInfoService gs){
-        this.gs = gs;
+    public MapController(GetInfoService gs ,KeywordSearchService ks){
+        this.gs =gs;
+        this.ks=ks;
     }
+
+
     @GetMapping("/map")
     public String map(){
         return "map";
     }
-
+    
     @PostMapping("/getCoordinates")
-    public ModelAndView getCoordinates(@RequestParam("lat") String latitude, @RequestParam("lng") String longitude){
+    public ResponseEntity<List<JSONObject>> getCoordinates(@RequestParam("lat") String latitude, @RequestParam("lng") String longitude) {
         try {
-            // 문자열을 적절한 숫자 형식으로 변환 (예시)
-
-            ModelAndView mv = new ModelAndView();
             List<JSONObject> info = gs.getInfo(latitude, longitude);
-
-            mv.addObject("info", info); // 가져온 정보를 뷰로 전달
-            mv.setViewName("result");
-            return mv;
+            return new ResponseEntity<>(info, HttpStatus.OK);
         } catch (Exception e) {
-            // 기타 예외 처리
-            ModelAndView mv = new ModelAndView("map");
-            return mv;
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/getCode")
+    public ResponseEntity<Map<String, String>> getCode(@RequestParam("areaCode") int areaCode) {
+        try {
+            Map<String, String> info = ks.getAreaInfo(areaCode);
+            return new ResponseEntity<>(info, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/getKeywords")
+    public ResponseEntity<Map<String, String>> getKeyword(@RequestParam("areaCode") int areaCode,@RequestParam("sigunguCode") int sigunguCode, @RequestParam("keyword")String keyword){
+        try {
+            Map<String, String> Info = (Map<String, String>) ks.getInfo(areaCode,sigunguCode,keyword);
+            return new ResponseEntity<>(Info, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

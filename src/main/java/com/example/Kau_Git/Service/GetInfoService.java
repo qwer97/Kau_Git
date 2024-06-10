@@ -44,7 +44,6 @@ public class GetInfoService {
         List<JSONObject> resultList = new ArrayList<>();
 
 
-        // 예를 들어, jsonResponse 내의 items 배열을 순회하며 각 아이템의 필요한 정보(이미지, 타이틀, 주소, 거리)를 추출하여 resultList에 추가할 수 있습니다.
 
         try {
             JSONParser parser = new JSONParser(JSONParser.MODE_JSON_SIMPLE);
