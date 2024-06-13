@@ -20,8 +20,7 @@ public class KeyWordTest {
     @Test
     public void ttest(){
         RestTemplate rt = rb.build();
-        Scanner s = new Scanner(System.in);
-        var info = ks.getInfo(1,21,"pharmacy");
+        var info = ks.getInfo("pharmacy",1,1);
 
         for (var in : info) {
             System.out.println("주소: " + in.get("addr1"));
