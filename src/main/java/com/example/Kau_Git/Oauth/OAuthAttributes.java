@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class OAuthAttributes { //사용자 정보 전달
+public class OAuthAttributes { //사용자 정보 전달 , 소셜로그인을 위한 dto라고 생각
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
